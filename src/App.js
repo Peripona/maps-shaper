@@ -6,7 +6,10 @@ import GoogleMapsLoader from "./util/GoogleMapsLoader";
 class App extends Component {
   constructor(props) {
     super(props);
+    this.polygon = {};
     this.googleMapsLoaded = this.googleMapsLoaded.bind(this);
+    this.toggleDraggable = this.toggleDraggable.bind(this);
+    this.toggleEditable = this.toggleEditable.bind(this);
   }
 
   googleMapsLoaded() {
@@ -16,7 +19,7 @@ class App extends Component {
       zoom: 18
     });
 
-    const rs = {
+    /*const rs = {
       "id": "u32v4",
       "lat": 52.94786,
       "lng": 12.39535,
@@ -34,7 +37,7 @@ class App extends Component {
       south: 44.490,
       east: -78.443,
       west: -78.649
-    };
+    };*/
 
     const coords = [
       {lng: 8.629650948685676, lat: 50.08116223910306},
@@ -56,7 +59,7 @@ class App extends Component {
     ];
 
     // Construct the polygon.
-    const polygon = new window.google.maps.Polygon({
+    this.polygon = new window.google.maps.Polygon({
       paths: coords,
       strokeColor: '#FF0000',
       strokeOpacity: 0.8,
@@ -65,7 +68,7 @@ class App extends Component {
       fillOpacity: 0.35,
       editable: true
     });
-    polygon.setMap(map);
+    this.polygon.setMap(map);
 /*
     // Define a rectangle and set its editable property to true.
     const rectangle = new window.google.maps.Rectangle({
@@ -79,22 +82,23 @@ class App extends Component {
     GoogleMapsLoader.loadScript(this.googleMapsLoaded);
   }
 
+  toggleDraggable() {
+    const draggableState = this.polygon.getDraggable();
+    return this.polygon.setDraggable(!draggableState);
+  }
+
+
+  toggleEditable() {
+    const editableState = this.polygon.getEditable();
+    return this.polygon.setEditable(!editableState);
+  }
+
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          {/*<img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>*/}
+          <button className="button" onClick={this.toggleDraggable}>Toggle Shape Draggable</button>
+          <button className="button" onClick={this.toggleEditable}>Toggle Shape Editable</button>
           <div id="map">Maps</div>
         </header>
       </div>
