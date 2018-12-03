@@ -16,7 +16,7 @@ class App extends Component {
     console.log("loaded", this);
     const map = new window.google.maps.Map(document.getElementById('map'), {
       center: {lng: 8.629650948685676, lat: 50.08116223910306},
-      zoom: 18
+      zoom: 20
     });
 
     /*const rs = {
